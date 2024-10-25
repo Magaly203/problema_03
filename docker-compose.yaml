@@ -1,0 +1,28 @@
+# Esto indica la versión de Docker Compose que estamos utilizando.
+version: '3.8'
+
+# Aquí definimos los servicios que vamos a crear con Docker Compose. 
+services:
+
+# Este es el servicio para nuestra aplicación web.
+  web:
+  # Aquí le estamos diciendo a Docker que construya la imagen para el servicio web usando el Dockerfile ubicado en el directorio actual.
+    build: 
+    # Aquí estamos exponiendo los puertos para que podamos acceder al servicio web desde fuera del contenedor.
+    ports:
+      - "8080:80"
+# Este es el servicio para la base de datos MySQL.
+  db:
+  # Aquí estamos usando la imagen oficial de MySQL.
+  # En lugar de construir una imagen como en el servicio web, 
+  # simplemente le decimos a Docker que descargue esta imagen de MySQL desde el registro de Docker Hub.
+    image: mysql:5.7
+    # Aquí estamos configurando variables de entorno para el contenedor de MySQL. 
+    # Estas variables le permiten configurar ciertos parámetros del servidor de bases de datos cuando se inicia.
+    environment:
+    # Esta variable define la contraseña del usuario root.
+    # En este caso, estamos usando "rootpassword" como contraseña.
+      MYSQL_ROOT_PASSWORD: rootpassword
+      # Este código crea una base de datos automáticamente cuando se inicia el contenedor.
+      # Esto es útil porque no tendrás que crear manualmente la base de datos; Docker lo hará por ti cuando el servicio se levante.
+      MYSQL_DATABASE: mydatabase
